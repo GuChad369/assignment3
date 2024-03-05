@@ -1,13 +1,13 @@
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.text.SimpleDateFormat;
 
+
+
 public class PostgreSQLJDBCConnection {
+    // declare the connection obj
+    private static Connection conn = null;
+
+
     public static void main(String[] args) {
 
         // JDBC & Database credentials
@@ -15,8 +15,6 @@ public class PostgreSQLJDBCConnection {
         String user = "postgres";
         String password = "111111";
 
-        // declare the connection obj
-        Connection conn = null;
         try {
             // Load PostgreSQL JDBC Driver
             Class.forName("org.postgresql.Driver");
@@ -27,16 +25,20 @@ public class PostgreSQLJDBCConnection {
                 System.out.println();
 
                 // Retrieves and displays all records from the students table
-                getAllStudents(conn);
+                 getAllStudents();
+
 
                 // Inserts a new student record into the students table.
-                // addStudent(conn,"Jack","Dong","jack.dong@example.com","2024-03-04");
+//                addStudent("Jack","Dong","jack.dong@example.com","2024-03-04");
+
 
                 // Updates the email address for a student with the specified student_id.
-                // updateStudentEmail(conn, 5, "111111111@example.com");
+//                updateStudentEmail(7, "111111111@example.com");
+
 
                 // Deletes the record of the student with the specified student_id.
-                // deleteStudent(conn,5);
+//                deleteStudent(7);
+
 
             } else {
                 System.out.println("Failed to establish connection.");
@@ -58,8 +60,9 @@ public class PostgreSQLJDBCConnection {
 
     }
 
+
     // 1. Retrieves and displays all records from the students table.
-    private static void getAllStudents(Connection conn) throws SQLException {
+    private static void getAllStudents() throws SQLException {
         // Create statement
         Statement stmt = conn.createStatement();
         // write the right sql language
@@ -90,9 +93,9 @@ public class PostgreSQLJDBCConnection {
         stmt.close();
     }
 
+
     // 2. Inserts a new student record into the students table.
-    private static void addStudent(Connection conn, String first_name, String last_name, String email,
-            String enrollment_date) throws Exception {
+    private static void addStudent(String first_name, String last_name, String email, String enrollment_date) throws Exception {
         // create sql
         String insertSQL = "INSERT INTO students (first_name, last_name, email, enrollment_date) VALUES (?, ?, ?,?)";
         // create PreparedStatement obj
@@ -113,7 +116,7 @@ public class PostgreSQLJDBCConnection {
     }
 
     // 3. Updates the email address for a student with the specified student_id.
-    private static void updateStudentEmail(Connection conn, int student_id, String new_email) throws SQLException {
+    private static void updateStudentEmail(int student_id, String new_email) throws SQLException {
         String updateSQL = "UPDATE students SET email = ? WHERE student_id = ?";
         PreparedStatement pstmt = conn.prepareStatement(updateSQL);
 
@@ -125,7 +128,7 @@ public class PostgreSQLJDBCConnection {
     }
 
     // 4. Deletes the record of the student with the specified student_id.
-    private static void deleteStudent(Connection conn, int student_id) throws SQLException {
+    private static void deleteStudent(int student_id) throws SQLException {
         String deleteSQL = "DELETE FROM students WHERE student_id = ?";
         PreparedStatement pstmt = conn.prepareStatement(deleteSQL);
 
