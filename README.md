@@ -7,7 +7,7 @@
 
 ## Video
 
-Website: https://youtu.be/TBvMTmTBy04
+Website: https://youtu.be/tql0gR7oOzg
 
 ## Instruction
 
